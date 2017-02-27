@@ -1,3 +1,3 @@
 = Installation Overview
 
-This document provides instructions for installing Middleware Manager servers with Red Hat CloudForms.
+This document provides instructions for installing the Middleware Manager server with Red Hat CloudForms.
