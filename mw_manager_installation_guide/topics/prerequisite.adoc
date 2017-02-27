@@ -1,4 +1,4 @@
-= Prerequisite
+= Installation Prerequisites
 
 To manage Red Hat Middleware servers with CloudForms, the following pieces are
 required to be properly installed
@@ -9,7 +9,7 @@ required to be properly installed
 
 == Installing Red Hat CloudForms Server 4.2
 To install Red Hat CloudForms Server, please refer to
-link:https://access.redhat.com/documentation/en/red-hat-cloudforms/[its installation guide]
+link:https://access.redhat.com/documentation/en/red-hat-cloudforms/[the CloudForms installation guide].
 
 == Installing Red Hat Enterprise Linux 7.2 or higher
 To run the Middleware Manager, a successful installation of RHEL 7.2 or higher is
