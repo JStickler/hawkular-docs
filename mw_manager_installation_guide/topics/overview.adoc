@@ -1,4 +1,3 @@
-= Overview
+= Installation Overview
 
-This documentation aims at driving the user through the installation procedure
-to manage MW servers with Red Hat CloudForms.
+This document provides instructions for installing Middleware Manager servers with Red Hat CloudForms.
