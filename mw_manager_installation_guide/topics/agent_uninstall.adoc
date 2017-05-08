@@ -1,0 +1,10 @@
+[[uninstalling_the_middleware_management_agent]]
+= Un-installing the Middleware Management Agent
+
+
+[WARNING]
+====
+Uninstalling a JBoss EAP agent installation that was installed using the RPM method is not recommended.
+
+Because of the nature of RPM package management, it cannot be guaranteed that all installed packages and dependencies will be completely removed, or that the system will not be left in an inconsistent state caused by missing package dependencies.
+====

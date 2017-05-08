@@ -1,0 +1,45 @@
+[[installing_the_middleware_management_agent_zip]]
+= Installing the Middleware Management Agent via Zip
+
+The EAP agent zip installer is available from the middleware manager status page.
+
+. Launch a browser and go to http://my_mwmanager_host:8080/.
+. Click the *EAP Agent Installer* link.
+. In the Authentication Required pop-up, enter the credentials for the middleware manager user (the `*HAWKULAR_USERNAME*` and `*HAWKULAR_PASSWORD*`).
++
+The middleware management server downloads a file named  `*hawkular-wildfly-agent-installer.jar*` to your local machine.
+
+== Install the Agent in Enterprise Application Platform
+
+NOTE: The agent installer requires the EAP server to be down during the agent installation process.
+
+After you have downloaded the `*.jar*` file, use one of the following commands to copy the file to the EAP server (if it is on a different machine) and install the agent.  Select the command that matches the mode of your EAP server.
+
+.Standalone mode
+
+[source, bash]
+----
+java -jar ~Downloads/hawkular-wildfly-agent-installer.jar
+   --target-location=/opt/jboss-eap-7.0/
+   --server-url=http://my_mwmanager_host:8080
+   --username=my_mwmanager_username
+   --password=my_mwmanager_password
+----
+
+.Domain mode
+[source, bash]
+----
+java -jar ~Downloads/hawkular-wildfly-agent-installer.jar
+   --target-location=/opt/jboss-eap-7.0/
+   --target-config=/opt/jboss-eap-7.0/domain/configuration/host.xml
+   --server-url=http://my_mwmanager_host:8080
+   --username=my_mwmanager_username
+   --password=my_mwmanager_password
+----
+
+== Verify the Agent Installation in {product-title_short}
+. Start or restart the newly instrumented EAP server.
+. In {product-title_short}, select *Middleware*, then *Providers* and select the {ProductShortname} provider that you previously configured.
+. On the Summary screen, in the *Relationships* table, click the *Middleware Servers* icon to view the instrumented servers.
+
+NOTE: The new server may take a few moments to appear.

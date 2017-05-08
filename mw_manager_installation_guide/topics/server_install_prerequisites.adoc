@@ -1,0 +1,51 @@
+[[installation_prerequisites]]
+= Installation Prerequisites
+
+////
+What you need before you can install.  Permissions, other components that must
+be installed first, etc.
+////
+The installation instructions for the {ProductName} server assume that you already have the following in place:
+
+* Red Hat Enterprise Linux 7.2 or higher or Red Hat Enterprise Atomic Host 7.2 or higher. For installation instructions, refer to the
+link:https://access.redhat.com/documentation/en/red-hat-enterprise-linux/[Red Hat Enterprise Linux installation guide].
+* {product-title} 4.2 installed.  For installation instructions,  refer to the
+link:https://access.redhat.com/documentation/en/red-hat-cloudforms/[Red Hat CloudForms installation guide].
+* Docker version 1.8 or higher.
+
+
+[[docker_configuration]]
+== Installing and Configuring Docker
+
+. Register your Linux machine and add the following repositories for Docker support.
++
+[source, bash]
+----
+subscription-manager register --username=<rhnuser> --password=<pwd>
+subscription-manager list --available
+subscription-manager attach --pool=<pool_id>
+subscription-manager repos --enable=rhel-7-server-extras-rpms
+----
++
+. Install Docker and the required dependencies.
++
+[source, bash]
+----
+yum install docker
+----
++
+. Start the Docker service.
++
+[source, bash]
+----
+systemctl start docker
+----
++
+. Enable the Docker service.
++
+[source, bash]
+----
+systemctl enable docker
+----
+
+
