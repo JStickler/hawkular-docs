@@ -1,0 +1,56 @@
+[[starting_cassandra]]
+= Install and Configure Cassandra
+
+The {ProductShortName} services require a running Cassandra instance.
+
+. Run the Cassandra container and configure the Cassandra data location.
+ By default the Cassandra container will create a volume under *_/opt/apache-cassandra/data_*.  This container directory will automatically be mapped to a unique local directory which you can view using `docker inspect <container-id>`.
+You can use the `-v` option to map the Cassandra data volume to a specific host directory.
++
+IMPORTANT: `CASSANDRA_START_RPC` must be set to `true`.  If this option is set to `false` the middleware manager services cannot connect to Cassandra.
++
+
+NOTE: The `Z` option is necessary on Red Hat Enterprise Linux/Fedora based systems to correctly set the SELinux permissions.
+
++
+----
+docker run --name mwmanager-cassandra -d -e CASSANDRA_START_RPC=true -v /var/mydatastore:/opt/apache-cassandra/data:Z registry.access.redhat.com/jboss-mm-7-tech-preview/middleware-manager-datastore:latest
+----
++
+
+. Verify that the server is running.
+
++
+[source, bash]
+----
+docker ps
+----
++
+.Result
+----
+CONTAINER ID   IMAGE                                                                         COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+34a75ba45be8   registry.access.redhat.com/jboss-mm-7-tech-preview/middleware-manager-datastore:latest   "/docker-entrypoint.s"   44 seconds ago   Up 44 seconds   7000-7001/tcp, 7199/tcp, 9042/tcp, 9160/tcp   mwmanager-cassandra
+----
+
+.  View the node information.
+
++
+[source, bash]
+----
+docker exec -it <container_id> /opt/apache-cassandra/bin/nodetool info
+----
+
+////
+Need example output for exec command
+////
+
+[[cassandra_non-default_user]]
+== Running Cassandra with a Non-default User
+You can run the Cassandra container with an arbitrary user ID, however, that user must have permissions to write to the Cassandra data volume.
+
+NOTE: The `Z` option is necessary on Red Hat Enterprise Linux/Fedora based systems to correctly set the SELinux permissions.
+
+----
+chown myuser:myuser /var/mydatastore 
+docker run --name mwmanager-cassandra -d -e CASSANDRA_START_RPC=true --user $(id -u myuser) -v /var/mydatastore:/opt/apache-cassandra/data:Z registry.access.redhat.com/jboss-mm-7-tech-preview/middleware-manager-datastore:latest
+----

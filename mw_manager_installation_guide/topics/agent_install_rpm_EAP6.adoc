@@ -1,0 +1,57 @@
+[[installing_the_agent_rpm_eap6]]
+= Installing the Agent via RPM for EAP 6 
+
+The {ProductShortname} agent is available via the JBoss EAP 6 RPM stream.
+
+== Installation Prerequisites for EAP 6 Agent
+The installation instructions for the Red Hat Middleware Management agent assume that you have already completed the following tasks: 
+
+. Configured the EAP 6 repository.
+* For configuration instructions via either Red Hat Subscription Manager or Red Hat Network Classic, refer to the  https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Installation_Guide/sect-RPM_Installation.html[Red Hat JBoss EAP 6 installation instructions].
+* To configure the repository manually, 
+create a new configuration file called `/etc/yum.repos.d/jboss-eap.repo`.
++
+./etc/yum.repos.d/jboss-eap.repo
+....
+[jboss-eap6]
+name=JBoss EAP 6.4
+baseurl=http://download.devel.redhat.com/released/jboss/eap6/6.4.13/composes/JBEAP-6.4.13-RHEL-7/Server/x86_64/os/
+gpgcheck=0
+....
++
+. Installed EAP 6 using the following command:
+
+ yum groupinstall jboss-eap6
+
++
+For complete installation and configuration instructions, refer to the  https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Installation_Guide/sect-RPM_Installation.html[Red Hat JBoss EAP 6 installation instructions].
++
+. Stopped the EAP server if it is running.
+
+== Installing the Agent on EAP 6
+
+NOTE: The agent installer requires the EAP server to be down during the agent installation process.
+
+. Install the required EAP module.
+ 
+ yum install middleware-manager-agent-eap6
+
+. Configure the server:
++
+....
+$ export JBOSS_HOME=/usr/share/jbossas/
+$ java -jar ${JBOSS_HOME}/bin/hawkular-wildfly-agent-installer.jar \
+       --target-location=${JBOSS_HOME} \
+       --server-url=http://${HAWKULAR_SERVER}:${HAWKULAR_PORT} \
+       --username=jdoe \
+       --password=password \
+       --config-only=true \
+....
+
+
+== Verify the Agent Installation in {product-title_short}
+. Start or restart the newly instrumented EAP server.
+. In {product-title_short}, select *Middleware*, then *Providers* and select the {ProductShortname} provider that you previously configured.
+. On the Summary screen, in the *Relationships* table, click the *Middleware Servers* icon to view the instrumented servers.
+
+NOTE: The new server may take a few moments to appear.

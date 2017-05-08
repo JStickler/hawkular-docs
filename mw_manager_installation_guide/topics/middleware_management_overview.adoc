@@ -1,0 +1,7 @@
+[[middleware_management_overview]]
+= Middleware Management Overview
+
+
+Middleware management in {product-title_short} is a provider based on the http://www.hawkular.org/[Hawkular] open source project.  The middleware provider extends {product-title_short} management capabilities to JBoss Middleware application containers running in managed virtual machines, hosts, and Linux containers. The provider will deliver inventory, events, metrics, and power operations.  
+
+When feature complete, the middleware provider will replace the current Red Hat middleware management offering, https://access.redhat.com/products/red-hat-jboss-operations-network[JBoss Operations Network].

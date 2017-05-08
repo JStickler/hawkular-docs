@@ -1,0 +1,18 @@
+[[configure_ssl]]
+= Enabling SSL with Middleware Manager
+
+Secure Socket Layer (SSL) allows secure communications between browsers and web servers. The data sent is encrypted by one side, transmitted, and then decrypted by the other side before processing. Both the server and the browser encrypt all communication packets before sending out data.
+
+You can provide a trusted third-party or a self-signed certificate to secure communications between the provider and CloudForms, or you can use an existing certificate managed by CloudForms to secure communications. There are three ways to enable SSL when you add a middleware provider to CloudForms.  Each of these three methods assumes that you have set the environment variable `*HAWKULAR_USE_SSL*` to true when you started the middleware manager services.
+
+. Provide your public and private keys as two .PEM files located in *_/client-secrets/hawkular-services-private.key_* and *_/client-secrets/hawkular-services-public.pem_*.
+. Provide both your public and private keys as a pksc12 file located in  *_/client-secrets/hawkular-services.pkcs12_*.
+. Provide an auto-generated self-signed certificate in .PEM format when you add the Middleware Provider in CloudForms.
+
+WARNING: Using a self-signed SSL certificate to create a keystore is not intended for production environments. For production environments or where SSL encrypted communication is required, you must use a SSL certificate that is purchased from a verified Certificate Authority.
+
+For instructions on how to generate a self-signed certificate with Cloudforms, see the 
+https://access.redhat.com/documentation/en-us/red_hat_cloudforms/4.2/html/appliance_hardening_guide/server-security#creating-a-self-signed-certificate[CloudForms Hardening Guide].
+
+For instructions on how to make your self-signed certificate trusted with Cloudforms, see the
+https://access.redhat.com/documentation/en-us/red_hat_cloudforms/4.2/html/appliance_hardening_guide/server-security#enabling_the_appliance_to_use_your_certificate[CloudForms Hardening Guide].

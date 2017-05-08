@@ -1,0 +1,64 @@
+[[installing_the_agent_rpm_eap7]]
+= Installing the Agent via RPM for EAP 7
+
+The {ProductShortname} agent is available via the JBoss EAP 7 RPM stream.
+
+== Agent Installation Prerequisites for EAP 7
+The installation instructions for the Red Hat Middleware Management agent assume that you have already completed the following tasks: 
+
+. Configured the EAP 7 repository.
+
+* For configuration instructions via Red Hat Subscription Manager, refer to the https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.0/html-single/installation_guide/#rpm_installation[Red Hat JBoss EAP 7 installation instructions].
+
+* To configure the repository manually, 
+create a new configuration file called `/etc/yum.repos.d/jboss-eap.repo`.
++
+./etc/yum.repos.d/jboss-eap.repo
+....
+[jboss-eap7]
+name=JBoss EAP 7
+enabled=1
+gpgcheck=0
+baseurl=http://download.devel.redhat.com/released/jboss/eap7/7.0.4/composes/JBEAP-7.0.4-RHEL-7/Server/x86_64/os/
+....
++
+. Installed EAP 7 using the following command:
+
+  yum groupinstall "JBoss EAP 7"
+
++
+For complete installation and configuration instructions, refer to the 
+https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.0/html-single/installation_guide/#rpm_installation[Red Hat JBoss EAP 7 installation instructions].
++
+. Stopped the EAP server if it is running.
+
+
+== Installing the Agent on EAP 7
+
+NOTE: The agent installer requires the EAP server to be down during the agent installation process.
+
+. Install the required EAP module.
+
+ yum install eap7-middleware-manager-agent
+
+. Configure the server:
++
+....
+export JBOSS_HOME=/opt/rh/eap7/root/usr/share/wildfly/
+export HAWKULAR_SERVER=<hawkular-server>
+export HAWKULAR_PORT=8080
+java -jar ${JBOSS_HOME}/bin/hawkular-wildfly-agent-installer.jar \
+       --target-location=${JBOSS_HOME} \
+       --server-url=http://${HAWKULAR_SERVER}:${HAWKULAR_PORT} \
+       --username=jdoe \
+       --password=password \
+       --config-only=true
+....
+
+
+== Verify the Agent Installation in {product-title_short}
+. Start or restart the newly instrumented EAP 7 server.
+. In {product-title_short}, select *Middleware*, then *Providers* and select the {ProductShortname} provider that you previously configured.
+. On the Summary screen, in the *Relationships* table, click the *Middleware Servers* icon to view the instrumented servers.
+
+NOTE: The new server may take a few moments to appear.

@@ -1,0 +1,69 @@
+[[starting_mm]]
+= Starting the Middleware Manager Services
+
+. Start the mwmanager-services and link it to the running Cassandra instance.  By default the middleware manager container will create a volume under *_/var/opt/hawkular/data_*. As with the Cassandra container, you can use the `-v` option to map the middleware manager data volume to a specific host directory.
++
+
+NOTE: The `Z` option is necessary on Red Hat Enterprise Linux/Fedora based systems to correctly set the SELinux permissions.
+
++
+----
+docker run -d --link=mwmanager-cassandra \
+-e CASSANDRA_NODES=mwmanager-cassandra \
+-e HAWKULAR_BACKEND=remote \
+-p 8080:8080 -p 8443:8443 -p 9990:9990 \
+-v /var/opt/mwmanager-data:/var/opt/hawkular/data:Z registry.access.redhat.com/jboss-mm-7-tech-preview/middleware-manager:latest
+----
++
+. Run the Middleware Manager container and tell it to connect to Cassandra. If desired, you can specify a combination of username/password for `*HAWKULAR_USERNAME*` and `*HAWKULAR_PASSWORD*`. If you do not specify a user name and password, one will be automatically generated when you start the container.
++
+[source, bash]
+----
+docker run --name mwmanager  -d \
+          -e HAWKULAR_BACKEND=remote   \
+          -e CASSANDRA_NODES=mwmanager-cassandra \
+          -e HAWKULAR_USE_SSL=true \
+          -e HAWKULAR_USERNAME=my_mwmanager_username \
+          -e HAWKULAR_PASSWORD=my_mwmanager_password \
+          -p 8080:8080 -p 8443:8443 -p 9990:9990 \
+          --link=mwmanager-cassandra \
+          registry.access.redhat.com/jboss-mm-7-tech-preview/middleware-manager:latest
+----
++
+.Service Options
+|===
+|Name |Default |Description 
+
+|`*CASSANDRA_NODES*`
+|myCassandra
+|The hostname or IP of Cassandra
+
+|`*DB_TIMEOUT*`
+|-
+|If set, will wait for specified number of seconds for Cassandra to start and become ready before starting the {ProductShortName} services.
+
+|`*HAWKULAR_BACKEND*`
+|remote
+|Indicates that the middleware manager services connects to a Cassandra server that is installed remotely.
+
+|`*HAWKULAR_METRICS_TTL*`
+|17
+|
+
+|`*HAWKULAR_USERNAME*`
+|
+|Username for the new user. If you do not specify a user name, one will be automatically generated.
+
+|`*HAWKULAR_PASSWORD*`
+|
+|Password for the new user. If you do not specify a password, one will be automatically generated.
+
+|`*HAWKULAR_USE_SSL*`
+|false
+|Whether to use secure socket layer (SSL) to establish an encrypted link between CloudForms and the middleware manager server.
+
+|===
++
+. Verify the {ProductShortname} installation by launching a brower and navigating to http://my_mwmanager_host:8080/. After a minute or two, you should see the middleware manager status page.
+
+image::mm_status_page.png[alt="Middleware Manager Status Page"]
